@@ -43,6 +43,7 @@
 
 - [Impressum](https://versicherungkompass.de/impressum)
 - [Datenschutzerklärung](https://versicherungkompass.de/datenschutz)
+- [Erstinformation (§ 15 VersVermV)](https://versicherungkompass.de/erstinformation)
 
 ## Hinweis
 

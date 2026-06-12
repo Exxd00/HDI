@@ -102,6 +102,7 @@ export const navigation = {
   ],
   legal: [
     { label: "Impressum", href: "/impressum" },
-    { label: "Datenschutz", href: "/datenschutz" }
+    { label: "Datenschutz", href: "/datenschutz" },
+    { label: "Erstinformation", href: "/erstinformation" }
   ]
 };

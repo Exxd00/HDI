@@ -7,7 +7,7 @@ import {
   Menu, Phone, ChevronDown, X, ChevronRight,
   Home, Briefcase, Users, Mail, Shield, Heart,
   Baby, Gem, Building2, Wallet, PiggyBank, Stethoscope,
-  FileText, Lock, ArrowRight, MapPin, Clock
+  FileText, Lock, ArrowRight, MapPin, Clock, Info
 } from "lucide-react";
 import { siteConfig, navigation } from "@/lib/data/site-config";
 
@@ -31,6 +31,7 @@ const pageIcons: Record<string, React.ElementType> = {
   "/paare-absicherung": Gem,
   "/impressum": FileText,
   "/datenschutz": Lock,
+  "/erstinformation": Info,
 };
 
 export function Header() {
