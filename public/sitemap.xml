@@ -1,98 +1,98 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://absicherung-nuernberg.de/</loc>
+    <loc>https://versicherungkompass.de/</loc>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://absicherung-nuernberg.de/leistungen</loc>
+    <loc>https://versicherungkompass.de/leistungen</loc>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://absicherung-nuernberg.de/ueber-uns</loc>
+    <loc>https://versicherungkompass.de/ueber-uns</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://absicherung-nuernberg.de/kontakt</loc>
+    <loc>https://versicherungkompass.de/kontakt</loc>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <!-- Versicherungen -->
   <url>
-    <loc>https://absicherung-nuernberg.de/service/lebensversicherung</loc>
+    <loc>https://versicherungkompass.de/service/lebensversicherung</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://absicherung-nuernberg.de/service/risikolebensversicherung</loc>
+    <loc>https://versicherungkompass.de/service/risikolebensversicherung</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://absicherung-nuernberg.de/service/berufsunfaehigkeit</loc>
+    <loc>https://versicherungkompass.de/service/berufsunfaehigkeit</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://absicherung-nuernberg.de/service/altersvorsorge</loc>
+    <loc>https://versicherungkompass.de/service/altersvorsorge</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://absicherung-nuernberg.de/service/private-krankenversicherung</loc>
+    <loc>https://versicherungkompass.de/service/private-krankenversicherung</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://absicherung-nuernberg.de/service/sachversicherungen</loc>
+    <loc>https://versicherungkompass.de/service/sachversicherungen</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <!-- Absicherung -->
   <url>
-    <loc>https://absicherung-nuernberg.de/familie-absichern</loc>
+    <loc>https://versicherungkompass.de/familie-absichern</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://absicherung-nuernberg.de/immobilienkredit-absichern</loc>
+    <loc>https://versicherungkompass.de/immobilienkredit-absichern</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://absicherung-nuernberg.de/einkommen-absichern</loc>
+    <loc>https://versicherungkompass.de/einkommen-absichern</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://absicherung-nuernberg.de/selbststaendige-absicherung</loc>
+    <loc>https://versicherungkompass.de/selbststaendige-absicherung</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://absicherung-nuernberg.de/kinder-absichern</loc>
+    <loc>https://versicherungkompass.de/kinder-absichern</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://absicherung-nuernberg.de/paare-absicherung</loc>
+    <loc>https://versicherungkompass.de/paare-absicherung</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <!-- Rechtliches -->
   <url>
-    <loc>https://absicherung-nuernberg.de/impressum</loc>
+    <loc>https://versicherungkompass.de/impressum</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://absicherung-nuernberg.de/datenschutz</loc>
+    <loc>https://versicherungkompass.de/datenschutz</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>

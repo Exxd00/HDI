@@ -2,7 +2,7 @@ export const siteConfig = {
   name: "HDI Generalvertretung Werner Böhm",
   shortName: "Werner Böhm Versicherungen",
   domain: "hdi.de/betreuer/agentur-werner-boehm",
-  url: "https://absicherung-nuernberg.de",
+  url: "https://versicherungkompass.de",
   description: "Ihr Versicherungspartner in Nürnberg. Spezialisten für Versicherung, Vorsorge und Risikomanagement.",
   agent: {
     name: "Werner Böhm",

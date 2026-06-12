@@ -48,4 +48,4 @@ User-agent: Applebot-Extended
 Allow: /
 
 # Sitemap
-Sitemap: https://absicherung-nuernberg.de/sitemap.xml
+Sitemap: https://versicherungkompass.de/sitemap.xml
