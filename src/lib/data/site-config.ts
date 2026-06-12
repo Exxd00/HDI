@@ -54,6 +54,20 @@ export const siteConfig = {
     chamber: "IHK Nürnberg für Mittelfranken",
     hdiAddress: "HDI-Platz 1, 30659 Hannover"
   },
+  vermittler: {
+    insurance: {
+      role: "Gebundener Versicherungsvermittler gemäß § 34d Abs. 7 GewO",
+      number: "D-D1N4-DJ524-25"
+    },
+    financialInvestment: {
+      role: "Finanzanlagenvermittler gemäß § 34f Abs. 1 GewO",
+      number: "D-F-155-LE46-33"
+    },
+    permitAuthority: "IHK Nürnberg für Mittelfranken",
+    registerName: "DIHK – Deutscher Industrie- und Handelskammertag e.V.",
+    registerAddress: "Breite Straße 29, 10178 Berlin",
+    registerUrl: "https://www.vermittlerregister.info"
+  },
   social: {
     linkedIn: "https://www.linkedin.com/company/hdi-versicherung/",
     facebook: "https://www.facebook.com/HDI.Versicherung/",

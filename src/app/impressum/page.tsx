@@ -49,14 +49,34 @@ export default function ImpressumPage() {
               Verliehen in: Deutschland
             </p>
 
-            <h2 className="text-lg md:text-2xl">Vermittlerregister</h2>
+            <h2 className="text-lg md:text-2xl">Versicherungs- und Finanzanlagenvermittlung</h2>
             <p className="text-sm md:text-base">
-              Registriert als Versicherungsvertreter mit Erlaubnis nach § 34d Abs. 1 GewO<br />
-              Registrierungsbehörde: DIHK | Deutscher Industrie- und Handelskammertag e.V.<br />
-              Breite Straße 29, 10178 Berlin<br />
-              <a href="https://www.vermittlerregister.info" target="_blank" rel="noopener noreferrer" className="text-green-700 hover:underline">
+              Herr {siteConfig.agent.name} ist im Vermittlerregister mit folgenden Erlaubnissen eingetragen:
+            </p>
+            <p className="text-sm md:text-base">
+              <strong>{siteConfig.vermittler.insurance.role}</strong><br />
+              Registrierungsnummer: {siteConfig.vermittler.insurance.number}
+            </p>
+            <p className="text-sm md:text-base">
+              <strong>{siteConfig.vermittler.financialInvestment.role}</strong><br />
+              Registrierungsnummer: {siteConfig.vermittler.financialInvestment.number}
+            </p>
+            <p className="text-sm md:text-base">
+              <strong>Registerführende Stelle:</strong><br />
+              {siteConfig.vermittler.registerName}<br />
+              {siteConfig.vermittler.registerAddress}<br />
+              <a href={siteConfig.vermittler.registerUrl} target="_blank" rel="noopener noreferrer" className="text-green-700 hover:underline">
                 www.vermittlerregister.info
               </a>
+            </p>
+            <p className="text-sm md:text-base">
+              <strong>Erlaubnis- und Aufsichtsbehörde (Finanzanlagenvermittlung nach § 34f GewO):</strong><br />
+              {siteConfig.vermittler.permitAuthority}
+            </p>
+            <p className="text-sm md:text-base">
+              Als gebundener Versicherungsvermittler vermitteln wir ausschließlich Versicherungsprodukte der
+              HDI Versicherung AG. Für diese Vermittlungstätigkeit übernimmt das Versicherungsunternehmen
+              gemäß § 34d Abs. 7 GewO die uneingeschränkte Haftung.
             </p>
 
             <h2 className="text-lg md:text-2xl">Vertretenes Versicherungsunternehmen</h2>
