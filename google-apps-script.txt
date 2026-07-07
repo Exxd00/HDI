@@ -1,0 +1,252 @@
+// ═══════════════════════════════════════════════════════════════════════════
+//  HDI GENERALVERTRETUNG WERNER BÖHM · LEAD-TRACKING (Google Sheets)
+//  Spalten: Datum | Status | Event-Typ | Name | Telefon | E-Mail |
+//           Geburtsdatum | PLZ | Interesse | Nachricht | Prioritaet |
+//           Quelle | GCLID | Seite | Lead-Qualität
+//
+//  EINRICHTUNG:
+//   1. Neues Google Sheet öffnen → Erweiterungen → Apps Script
+//   2. Diesen Code komplett einfügen und speichern
+//   3. Bereitstellen → Neue Bereitstellung → Typ "Web-App"
+//        · Ausführen als: Ich
+//        · Zugriff: "Jeder" (Anyone)
+//   4. Web-App-URL kopieren → als GOOGLE_SHEETS_URL (Vercel / .env.local)
+//   5. Menü "HDI Tools → Webhook-URL anzeigen" zeigt die URL jederzeit an
+// ═══════════════════════════════════════════════════════════════════════════
+
+var HEADERS = [
+  'Datum', 'Status', 'Event-Typ', 'Name', 'Telefon', 'E-Mail',
+  'Geburtsdatum', 'PLZ', 'Interesse', 'Nachricht', 'Prioritaet',
+  'Quelle', 'GCLID', 'Seite', 'Lead-Qualität'
+];
+
+var COL = {
+  DATUM: 1, STATUS: 2, EVENT: 3, NAME: 4, TELEFON: 5, EMAIL: 6,
+  GEBURT: 7, PLZ: 8, INTERESSE: 9, NACHRICHT: 10, PRIO: 11,
+  QUELLE: 12, GCLID: 13, SEITE: 14, QUALITAET: 15
+};
+
+var HDI_GREEN = '#15803d';
+
+// ───────────────────────────────────────────────────────────── Webhook (POST)
+function doPost(e) {
+  try {
+    var data = JSON.parse(e.postData.contents);
+    var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+
+    if (sheet.getLastRow() === 0) {
+      setupHeaders(sheet);
+    }
+
+    var row = sheet.getLastRow() + 1;
+    var now = new Date();
+    var dateStr = Utilities.formatDate(now, 'Europe/Berlin', 'dd.MM.yyyy HH:mm');
+    var eventType = data.eventType || 'form';
+    var priority = data.priority || (eventType === 'form' ? 'Normal' : 'DRINGEND');
+
+    sheet.getRange(row, COL.DATUM).setValue(dateStr);
+    sheet.getRange(row, COL.STATUS).setValue('Neu');
+    sheet.getRange(row, COL.EVENT).setValue(eventType);
+    sheet.getRange(row, COL.NAME).setValue(data.name || '-');
+    sheet.getRange(row, COL.TELEFON).setValue(data.telefon || '-');
+    sheet.getRange(row, COL.EMAIL).setValue(data.email || '-');
+    sheet.getRange(row, COL.GEBURT).setValue(data.geburtsdatum || '-');
+    sheet.getRange(row, COL.PLZ).setValue(data.plz || '-');
+    sheet.getRange(row, COL.INTERESSE).setValue(data.interesse || data.service || '-');
+    sheet.getRange(row, COL.NACHRICHT).setValue(data.nachricht || data.message || '-');
+    sheet.getRange(row, COL.PRIO).setValue(priority);
+    sheet.getRange(row, COL.QUELLE).setValue(data.quelle || 'Direct');
+    sheet.getRange(row, COL.GCLID).setValue(data.gclid || '-');
+    sheet.getRange(row, COL.SEITE).setValue(data.seite || '-');
+    sheet.getRange(row, COL.QUALITAET).setValue('-');
+
+    formatRow(sheet, row, eventType, priority);
+    addDropdowns(sheet, row);
+
+    return json({ success: true, row: row });
+  } catch (error) {
+    return json({ success: false, error: error.toString() });
+  }
+}
+
+// Optional: einfacher Health-Check beim Öffnen der URL im Browser.
+function doGet() {
+  return json({ status: 'ok', service: 'HDI Lead-Tracking' });
+}
+
+function json(obj) {
+  return ContentService
+    .createTextOutput(JSON.stringify(obj))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+
+// ─────────────────────────────────────────────────────────────────── Kopfzeile
+function setupHeaders(sheet) {
+  for (var i = 0; i < HEADERS.length; i++) {
+    sheet.getRange(1, i + 1).setValue(HEADERS[i]);
+  }
+
+  var headerRange = sheet.getRange(1, 1, 1, HEADERS.length);
+  headerRange.setBackground(HDI_GREEN);
+  headerRange.setFontColor('#ffffff');
+  headerRange.setFontWeight('bold');
+  headerRange.setHorizontalAlignment('center');
+  headerRange.setVerticalAlignment('middle');
+
+  var widths = [130, 120, 100, 150, 130, 200, 110, 70, 150, 260, 100, 120, 160, 130, 120];
+  for (var w = 0; w < widths.length; w++) {
+    sheet.setColumnWidth(w + 1, widths[w]);
+  }
+
+  sheet.setRowHeight(1, 34);
+  sheet.setFrozenRows(1);
+}
+
+// ───────────────────────────────────────────────────── Zeilen-Formatierung
+function formatRow(sheet, row, eventType, priority) {
+  var rowRange = sheet.getRange(row, 1, 1, HEADERS.length);
+
+  // Hintergrund je nach Event-Typ
+  var bg = '#ffffff';
+  if (eventType === 'phone_call') bg = '#fef3c7';       // amber
+  else if (eventType === 'whatsapp') bg = '#dcfce7';    // grün
+  else if (eventType === 'form') bg = '#eff6ff';        // blau
+  rowRange.setBackground(bg);
+  rowRange.setVerticalAlignment('middle');
+  sheet.getRange(row, COL.NACHRICHT).setWrap(true);
+
+  // Event-Typ-Zelle
+  var eventCell = sheet.getRange(row, COL.EVENT);
+  if (eventType === 'phone_call') {
+    eventCell.setBackground('#f59e0b').setFontColor('#000000');
+  } else if (eventType === 'whatsapp') {
+    eventCell.setBackground('#22c55e').setFontColor('#ffffff');
+  } else {
+    eventCell.setBackground('#3b82f6').setFontColor('#ffffff');
+  }
+  eventCell.setFontWeight('bold').setHorizontalAlignment('center');
+
+  // Status-Zelle (neu)
+  sheet.getRange(row, COL.STATUS)
+    .setBackground('#3b82f6').setFontColor('#ffffff')
+    .setFontWeight('bold').setHorizontalAlignment('center');
+
+  // Prioritaet-Zelle
+  colorPriority(sheet.getRange(row, COL.PRIO), priority);
+}
+
+function colorPriority(cell, priority) {
+  cell.setFontWeight('bold').setHorizontalAlignment('center');
+  if (priority === 'DRINGEND') {
+    cell.setBackground('#dc2626').setFontColor('#ffffff');
+  } else if (priority === 'Niedrig') {
+    cell.setBackground('#84cc16').setFontColor('#000000');
+  } else {
+    cell.setBackground('#16a34a').setFontColor('#ffffff'); // Normal
+  }
+}
+
+// ─────────────────────────────────────────────────────────────── Dropdowns
+function addDropdowns(sheet, row) {
+  var statusRule = SpreadsheetApp.newDataValidation()
+    .requireValueInList(
+      ['Neu', 'In Bearbeitung', 'Kontaktiert', 'Termin vereinbart', 'Angebot gesendet', 'Abgeschlossen', 'Storniert'],
+      true)
+    .setAllowInvalid(false)
+    .build();
+  sheet.getRange(row, COL.STATUS).setDataValidation(statusRule);
+
+  var prioRule = SpreadsheetApp.newDataValidation()
+    .requireValueInList(['DRINGEND', 'Normal', 'Niedrig'], true)
+    .setAllowInvalid(false)
+    .build();
+  sheet.getRange(row, COL.PRIO).setDataValidation(prioRule);
+
+  var qualityRule = SpreadsheetApp.newDataValidation()
+    .requireValueInList(['-', '1 Stern', '2 Sterne', '3 Sterne', '4 Sterne', '5 Sterne'], true)
+    .setAllowInvalid(false)
+    .build();
+  sheet.getRange(row, COL.QUALITAET).setDataValidation(qualityRule);
+}
+
+// ───────────────────────────────────────── Live-Farben beim Bearbeiten
+function onEdit(e) {
+  var range = e.range;
+  var row = range.getRow();
+  var col = range.getColumn();
+  if (row < 2) return;
+  var value = range.getValue();
+
+  // Status
+  if (col === COL.STATUS) {
+    var map = {
+      'Neu': ['#3b82f6', '#ffffff'],
+      'In Bearbeitung': ['#eab308', '#000000'],
+      'Kontaktiert': ['#8b5cf6', '#ffffff'],
+      'Termin vereinbart': ['#06b6d4', '#ffffff'],
+      'Angebot gesendet': ['#f97316', '#ffffff'],
+      'Abgeschlossen': ['#16a34a', '#ffffff'],
+      'Storniert': ['#6b7280', '#ffffff']
+    };
+    var s = map[value] || ['#ffffff', '#000000'];
+    range.setBackground(s[0]).setFontColor(s[1]).setFontWeight('bold').setHorizontalAlignment('center');
+  }
+
+  // Prioritaet
+  if (col === COL.PRIO) {
+    colorPriority(range, value);
+  }
+
+  // Lead-Qualität
+  if (col === COL.QUALITAET) {
+    var qmap = {
+      '5 Sterne': ['#16a34a', '#ffffff'],
+      '4 Sterne': ['#84cc16', '#000000'],
+      '3 Sterne': ['#eab308', '#000000'],
+      '2 Sterne': ['#f97316', '#ffffff'],
+      '1 Stern': ['#dc2626', '#ffffff']
+    };
+    var q = qmap[value] || ['#ffffff', '#000000'];
+    range.setBackground(q[0]).setFontColor(q[1]).setFontWeight('bold').setHorizontalAlignment('center');
+  }
+}
+
+// ─────────────────────────────────────────────────────────── Menü & Tools
+function onOpen() {
+  SpreadsheetApp.getUi()
+    .createMenu('HDI Tools')
+    .addItem('Webhook-URL anzeigen', 'showWebhookUrl')
+    .addItem('Kopfzeile neu erstellen', 'resetHeaders')
+    .addItem('Test-Eintrag erstellen', 'createTestEntry')
+    .addToUi();
+}
+
+function showWebhookUrl() {
+  var url = ScriptApp.getService().getUrl();
+  SpreadsheetApp.getUi().alert(
+    'Webhook-URL',
+    url ? url : 'Bitte zuerst als Web-App bereitstellen (Bereitstellen → Neue Bereitstellung).',
+    SpreadsheetApp.getUi().ButtonSet.OK
+  );
+}
+
+function resetHeaders() {
+  setupHeaders(SpreadsheetApp.getActiveSpreadsheet().getActiveSheet());
+}
+
+function createTestEntry() {
+  doPost({ postData: { contents: JSON.stringify({
+    eventType: 'form',
+    name: 'Max Mustermann',
+    telefon: '0911 1234567',
+    email: 'max@example.de',
+    geburtsdatum: '15.06.1985',
+    plz: '90489',
+    interesse: 'Berufsunfähigkeit',
+    nachricht: 'Testeintrag über HDI Tools.',
+    priority: 'Normal',
+    quelle: 'Google Ads',
+    gclid: 'TEST-GCLID-123',
+    seite: '/kontakt'
+  }) } });
+}
